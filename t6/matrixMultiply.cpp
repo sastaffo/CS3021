@@ -1,7 +1,7 @@
 //
 // matrixMultiply.cpp
 //
-
+#include <stdio.h>
 #include "helper.h"                                     // helper functions
 
 #define K           1024LL                              // NB: 64 bit
@@ -46,7 +46,10 @@ int main(int argc, char **argv) {
 
 	// CPU details
 	printf("Intel%s family %u model %u stepping %u %s", (cpu64bit() ? "64" : "32"), cpuFamily(), cpuModel(), cpuStepping(), cpuBrandString());
-	printf(" NCPUS=%u RAM=%zuGB L2 cacheSz=%zuK\n", getNumberOfCPUs(), (getPhysicalMemSz() + G - 1) / G, cacheSz * sizeof(UINT) / 1024);
+	printf(" NCPUS=%u RAM=%lluGB L2 cacheSz=%luK\n",
+    getNumberOfCPUs(),
+    (getPhysicalMemSz() + G - 1) / G,
+    cacheSz * sizeof(UINT) / 1024);
 
 	// cache details
 	getCacheLineSz();          // get cache line size and output cache organisation
@@ -101,10 +104,21 @@ int main(int argc, char **argv) {
 
 		// matB_transposed = tranpose matB
 		// ADD YOUR CODE HERE
+        for (UINT i=0; i<N;i++)
+            for(UINT j=0; j<N; j++)
+                matB_transposed[j][i] = matB[i][j];
+
 
 		// matD = matA*matB_transposed
 		// ADD YOUR CODE HERE
-
+        for (UINT i=0; i<N; i++) {
+			for (UINT j=0; j<N; j++) {
+				UINT sum = 0;
+				for (UINT k=0; k<N; k++)
+					sum += matA[i][k] * matB_transposed[j][k];
+				matD[i][j] = sum;
+			}
+		}
 
 
 

@@ -49,6 +49,9 @@
 // NB: gcc needs flags -mrtm -mrdrnd
 //
 
+#include <stdio.h>
+#include <cstdio>
+#include <cstdlib>
 //#include <stdafx.h>           // pre-compiled headers
 #include <iostream>         // cout
 #include <iomanip>          // setprecision
